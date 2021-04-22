@@ -29,7 +29,6 @@ document.querySelector('.btn-new').addEventListener('click',function () {
 //'roll dice' button
 document.querySelector('.btn-roll').addEventListener('click',function() { 
     var dice = Math.floor( Math.random() * 6) + 1; 
-
     if(activePlayer == 0) {
         var diceDOM = document.querySelector('#dice-0');
         diceDOM.src = 'dice-' + dice + '.png';
@@ -44,12 +43,15 @@ document.querySelector('.btn-roll').addEventListener('click',function() {
 
     }
     else if(activePlayer == 1) {
-        var diceDOM = document.querySelector('#dice-1');
+        var diceDOM = document.querySelector('#dice-0');
         diceDOM.src = 'dice-' + dice + '.png';
+
         score1+=dice;
         document.querySelector('#score-1').innerHTML = score1;
+
         activePlayer = 0;
         p0Panel.className = 'player-0-panel active';
+
         p1Panel.className = 'player-1-panel';
 
     }
