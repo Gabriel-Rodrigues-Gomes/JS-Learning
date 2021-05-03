@@ -1,13 +1,10 @@
 
-var scores,roundScore,activePlayer,dice;
+var scores,roundScore,activePlayer,dice,init;
 
 p0Panel = document.querySelector('.player-0-panel')
 p1Panel = document.querySelector('.player-1-panel')
 
-roundScore = 0;
-activePlayer = 0;
-
-scores = [0,0];
+newGame();
 
 //new game function
 document.querySelector('.btn-new').addEventListener('click',newGame);
@@ -41,7 +38,11 @@ document.querySelector('.btn-hold').addEventListener('click',function(){
 });
 
 
-function newGame() {
+function newGame(){
+    roundScore = 0;
+    activePlayer = 0;
+    scores = [0,0];
+
     document.querySelector('#score-0').textContent = 0;
     document.querySelector('#score-1').textContent = 0;
 
@@ -54,10 +55,7 @@ function newGame() {
     p1Panel.className = 'player-1-panel';
     document.querySelector('#dice-0').style.display = 'none';
 
-    activePlayer = 0;
-    roundScore = 0;
-
-    scores = [0,0];
+   
 }
 function nextPlayer(){
     activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
