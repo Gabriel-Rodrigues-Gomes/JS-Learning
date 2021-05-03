@@ -1,5 +1,5 @@
 
-var scores,roundScore,activePlayer,dice,init;
+var scores,roundScore,activePlayer,dice,init,running;
 
 p0Panel = document.querySelector('.player-0-panel')
 p1Panel = document.querySelector('.player-1-panel')
@@ -9,8 +9,11 @@ newGame();
 //new game function
 document.querySelector('.btn-new').addEventListener('click',newGame);
 
+
+
 //'roll dice' button
 document.querySelector('.btn-roll').addEventListener('click',function() { 
+    if(running){
     dice = Math.floor( Math.random() * 6) + 1; 
     document.querySelector('#dice-0').src = 'dice-' + dice + '.png';
     document.querySelector('#dice-0').style.display = 'block';
@@ -23,9 +26,12 @@ document.querySelector('.btn-roll').addEventListener('click',function() {
     }
 
 
-});
+}});
+
+
 //hold button
 document.querySelector('.btn-hold').addEventListener('click',function(){
+    if(running){
 
     activePlayer === 0 ? scores[activePlayer] += roundScore : scores[activePlayer] +=roundScore;
     checkWinner();
@@ -35,13 +41,15 @@ document.querySelector('.btn-hold').addEventListener('click',function(){
 
     document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
     nextPlayer();
-});
+}});
 
 
 function newGame(){
     roundScore = 0;
     activePlayer = 0;
+    
     scores = [0,0];
+    running = true;
 
     document.querySelector('#score-0').textContent = 0;
     document.querySelector('#score-1').textContent = 0;
@@ -57,6 +65,7 @@ function newGame(){
 
    
 }
+
 function nextPlayer(){
     activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
         roundScore = 0;
@@ -69,14 +78,17 @@ function nextPlayer(){
         p0Panel.classList.toggle('active');
         p1Panel.classList.toggle('active');
 }
+
 function checkWinner(){
     if (scores[activePlayer] >= 100){
-
+        running = false;
         alert('player ' + (activePlayer + 1) + ' won the game!');
-        document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
 
+        document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
         document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+
         nextPlayer();
+        
 
     }
 }
