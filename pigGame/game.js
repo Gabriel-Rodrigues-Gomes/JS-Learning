@@ -12,6 +12,34 @@ scores = [0,0];
 //new game function
 document.querySelector('.btn-new').addEventListener('click',newGame);
 
+//'roll dice' button
+document.querySelector('.btn-roll').addEventListener('click',function() { 
+    dice = Math.floor( Math.random() * 6) + 1; 
+    document.querySelector('#dice-0').src = 'dice-' + dice + '.png';
+    document.querySelector('#dice-0').style.display = 'block';
+
+    if(dice !== 1){
+        roundScore += dice;
+        document.querySelector('#current-' + activePlayer).textContent = roundScore;
+    }else{
+        nextPlayer();
+    }
+
+
+});
+//hold button
+document.querySelector('.btn-hold').addEventListener('click',function(){
+
+    activePlayer === 0 ? scores[activePlayer] += roundScore : scores[activePlayer] +=roundScore;
+    checkWinner();
+
+    roundScore = 0;
+    document.getElementById('current-' + activePlayer).textContent = 0;
+
+    document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+    nextPlayer();
+});
+
 
 function newGame() {
     document.querySelector('#score-0').textContent = 0;
@@ -45,36 +73,12 @@ function nextPlayer(){
 }
 function checkWinner(){
     if (scores[activePlayer] >= 100){
+
         alert('player ' + (activePlayer + 1) + ' won the game!');
         document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
+
+        document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
         nextPlayer();
+
     }
 }
-
-//'roll dice' button
-document.querySelector('.btn-roll').addEventListener('click',function() { 
-    dice = Math.floor( Math.random() * 6) + 1; 
-    document.querySelector('#dice-0').src = 'dice-' + dice + '.png';
-    document.querySelector('#dice-0').style.display = 'block';
-
-    if(dice !== 1){
-        roundScore += dice;
-        document.querySelector('#current-' + activePlayer).textContent = roundScore;
-    }else{
-        nextPlayer();
-    }
-
-
-});
-//hold button
-document.querySelector('.btn-hold').addEventListener('click',function(){
-
-    activePlayer === 0 ? scores[activePlayer] += roundScore : scores[activePlayer] +=roundScore;
-    checkWinner();
-
-    roundScore = 0;
-    document.getElementById('current-' + activePlayer).textContent = 0;
-
-    document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
-    nextPlayer();
-});
