@@ -1,5 +1,5 @@
 
-var scores,roundScore,activePlayer,dice,init,running;
+var scores,roundScore,activePlayer,dice,init,running,prevDice,winningScore;
 
 p0Panel = document.querySelector('.player-0-panel')
 p1Panel = document.querySelector('.player-1-panel')
@@ -15,17 +15,30 @@ document.querySelector('.btn-new').addEventListener('click',newGame);
 document.querySelector('.btn-roll').addEventListener('click',function() { 
     if(running){
     dice = Math.floor( Math.random() * 6) + 1; 
+
+        if(prevDice === 6 && dice === 6){
+            scores[activePlayer] = 0;
+            roundScore = 0;
+
+            document.querySelector('#current-' + activePlayer).textContent = roundScore;
+            document.querySelector('#dice-0').src = 'dice-' + dice + '.png';
+            
+            document.querySelector('#dice-0').style.display = 'block';
+            return;
+    }
     document.querySelector('#dice-0').src = 'dice-' + dice + '.png';
     document.querySelector('#dice-0').style.display = 'block';
 
-    if(dice !== 1){
-        roundScore += dice;
-        document.querySelector('#current-' + activePlayer).textContent = roundScore;
-    }else{
-        nextPlayer();
-    }
+        if(dice !== 1){
+            roundScore += dice;
+            document.querySelector('#current-' + activePlayer).textContent = roundScore;
 
+        }/*else{
+            nextPlayer();
+    
+    }*/
 
+    prevDice = dice;
 }});
 
 
@@ -42,6 +55,13 @@ document.querySelector('.btn-hold').addEventListener('click',function(){
     document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
     nextPlayer();
 }});
+
+
+//Set score button
+document.querySelector('.btn-setscore').addEventListener('click',function(){
+    debugger;
+    winningScore = parseInt(document.querySelector('.final-score').value);
+});
 
 
 function newGame(){
@@ -80,7 +100,7 @@ function nextPlayer(){
 }
 
 function checkWinner(){
-    if (scores[activePlayer] >= 100){
+    if (scores[activePlayer] >= winningScore){
         running = false;
         alert('player ' + (activePlayer + 1) + ' won the game!');
 
