@@ -59,8 +59,9 @@ document.querySelector('.btn-hold').addEventListener('click',function(){
 
 //Set score button
 document.querySelector('.btn-setscore').addEventListener('click',function(){
-    debugger;
+    if(running){
     winningScore = parseInt(document.querySelector('.final-score').value);
+    }
 });
 
 
